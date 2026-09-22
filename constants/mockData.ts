@@ -1,4 +1,4 @@
-import { Chat, Contact } from '@/types';
+import { Call, Chat, Contact, Status } from '@/types';
 
 const avatarPalette = ['#2E7D6B', '#6B4EA0', '#C77A2E', '#3F6FB5', '#B5495B', '#4E9A7F'];
 
@@ -110,4 +110,20 @@ export const chats: Chat[] = [
       { id: 'm14', chatId: 'chat-c6', senderId: 'c6', text: 'Te ligo daqui a pouco', timestamp: 'terça' },
     ],
   },
+];
+
+export const statuses: Status[] = [
+  { id: 's1', contactId: 'c1', updatedAt: 'hoje, 08:30', viewed: false },
+  { id: 's2', contactId: 'c3', updatedAt: 'hoje, 07:15', viewed: false },
+  { id: 's3', contactId: 'c2', updatedAt: 'ontem, 22:40', viewed: true },
+  { id: 's4', contactId: 'c5', updatedAt: 'ontem, 19:05', viewed: true },
+];
+
+export const calls: Call[] = [
+  { id: 'call1', contactId: 'c2', type: 'audio', direction: 'outgoing', timestamp: 'hoje, 10:02' },
+  { id: 'call2', contactId: 'c1', type: 'video', direction: 'incoming', timestamp: 'hoje, 08:47' },
+  { id: 'call3', contactId: 'c4', type: 'audio', direction: 'missed', timestamp: 'ontem, 21:15' },
+  { id: 'call4', contactId: 'c6', type: 'audio', direction: 'incoming', timestamp: 'ontem, 18:30' },
+  { id: 'call5', contactId: 'c3', type: 'video', direction: 'outgoing', timestamp: 'terça, 20:00' },
+  { id: 'call6', contactId: 'c5', type: 'audio', direction: 'missed', timestamp: 'segunda, 09:10' },
 ];
