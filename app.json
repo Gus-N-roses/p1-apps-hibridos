@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "whatsapp-mock-scaffold",
-    "slug": "whatsapp-mock-scaffold",
+    "name": "Papo",
+    "slug": "papo-mock",
+    "description": "Mock de app de mensagens feito em Expo para fins acadêmicos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "whatsappmockscaffold",
+    "scheme": "papomock",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
