@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
@@ -16,7 +15,6 @@ const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string }[] = 
 export default function SettingsScreen() {
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Ajustes' }} />
       <Pressable style={styles.profileRow}>
         <Avatar name="Você" color={colors.primary} size={56} />
         <View>
