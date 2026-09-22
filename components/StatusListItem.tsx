@@ -24,7 +24,9 @@ export default function StatusListItem({
         <Avatar name={name} color={avatarColor} size={40} />
       </View>
       <View style={styles.textColumn}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name} numberOfLines={1}>
+          {name}
+        </Text>
         <Text style={styles.updatedAt}>{updatedAt}</Text>
       </View>
     </Pressable>

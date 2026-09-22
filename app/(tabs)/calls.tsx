@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import CallListItem from '@/components/CallListItem';
-import { colors } from '@/constants/theme';
+import { colors, spacing } from '@/constants/theme';
 import { calls, contacts } from '@/constants/mockData';
 
 export default function CallsScreen() {
@@ -10,6 +10,7 @@ export default function CallsScreen() {
       <FlatList
         data={calls}
         keyExtractor={(call) => call.id}
+        contentContainerStyle={styles.listContent}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => {
           const contact = contacts.find((c) => c.id === item.contactId);
@@ -39,5 +40,8 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     backgroundColor: colors.border,
     marginLeft: 76,
+  },
+  listContent: {
+    paddingVertical: spacing.xs,
   },
 });

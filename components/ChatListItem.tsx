@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
@@ -9,6 +10,7 @@ type ChatListItemProps = {
   lastMessage: string;
   timestamp: string;
   unreadCount: number;
+  pinned?: boolean;
   onPress: () => void;
 };
 
@@ -18,6 +20,7 @@ export default function ChatListItem({
   lastMessage,
   timestamp,
   unreadCount,
+  pinned = false,
   onPress,
 }: ChatListItemProps) {
   const hasUnread = unreadCount > 0;
@@ -26,13 +29,18 @@ export default function ChatListItem({
     <Pressable style={styles.row} onPress={onPress}>
       <Avatar name={name} color={avatarColor} />
       <View style={styles.textColumn}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name} numberOfLines={1}>
+          {name}
+        </Text>
         <Text style={[styles.preview, hasUnread && styles.previewUnread]} numberOfLines={1}>
           {lastMessage}
         </Text>
       </View>
       <View style={styles.meta}>
-        <Text style={[styles.timestamp, hasUnread && styles.timestampUnread]}>{timestamp}</Text>
+        <View style={styles.metaTop}>
+          {pinned && <Ionicons name="pin" size={12} color={colors.textSecondary} />}
+          <Text style={[styles.timestamp, hasUnread && styles.timestampUnread]}>{timestamp}</Text>
+        </View>
         {hasUnread && (
           <View style={styles.badge}>
             <Text style={styles.badgeText}>{unreadCount}</Text>
@@ -70,6 +78,11 @@ const styles = StyleSheet.create({
   meta: {
     alignItems: 'flex-end',
     gap: spacing.xs,
+  },
+  metaTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   timestamp: {
     fontSize: typography.size.xs,

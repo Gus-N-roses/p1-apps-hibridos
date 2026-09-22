@@ -14,6 +14,7 @@ export default function ChatsScreen() {
       <FlatList
         data={orderedChats}
         keyExtractor={(chat) => chat.id}
+        contentContainerStyle={styles.listContent}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => {
           const contact = contacts.find((c) => c.id === item.contactId);
@@ -26,6 +27,7 @@ export default function ChatsScreen() {
               lastMessage={lastMessage?.text ?? ''}
               timestamp={lastMessage?.timestamp ?? ''}
               unreadCount={item.unreadCount}
+              pinned={item.pinned}
               onPress={() => router.push(`/chat/${contact.id}`)}
             />
           );
@@ -47,6 +49,9 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     backgroundColor: colors.border,
     marginLeft: 76,
+  },
+  listContent: {
+    paddingBottom: 88,
   },
   fab: {
     position: 'absolute',

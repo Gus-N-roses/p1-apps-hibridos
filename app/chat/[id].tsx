@@ -48,6 +48,7 @@ export default function ChatScreen() {
       />
       <FlatList
         style={styles.messageList}
+        contentContainerStyle={styles.messageListContent}
         data={chat.messages}
         keyExtractor={(message) => message.id}
         renderItem={({ item }) => (
@@ -92,6 +93,9 @@ const styles = StyleSheet.create({
   },
   messageList: {
     flex: 1,
+  },
+  messageListContent: {
+    paddingVertical: spacing.sm,
   },
   inputBar: {
     flexDirection: 'row',

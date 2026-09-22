@@ -34,7 +34,9 @@ export default function CallListItem({
     <Pressable style={styles.row} onPress={onPress}>
       <Avatar name={name} color={avatarColor} />
       <View style={styles.textColumn}>
-        <Text style={[styles.name, isMissed && styles.nameMissed]}>{name}</Text>
+        <Text style={[styles.name, isMissed && styles.nameMissed]} numberOfLines={1}>
+          {name}
+        </Text>
         <View style={styles.subRow}>
           <Ionicons
             name={directionIcon[direction]}

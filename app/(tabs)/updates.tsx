@@ -20,6 +20,8 @@ export default function UpdatesScreen() {
       <SectionList
         sections={sections}
         keyExtractor={(status) => status.id}
+        contentContainerStyle={styles.listContent}
+        stickySectionHeadersEnabled={false}
         ListHeaderComponent={
           <View style={styles.myStatusRow}>
             <View style={styles.myStatusAvatarWrapper}>
@@ -98,5 +100,8 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.xs,
+  },
+  listContent: {
+    paddingBottom: spacing.md,
   },
 });
