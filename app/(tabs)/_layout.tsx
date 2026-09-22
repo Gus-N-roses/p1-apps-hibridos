@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Link, Tabs } from 'expo-router';
+import { Pressable } from 'react-native';
 
-import { colors } from '@/constants/theme';
+import { colors, spacing } from '@/constants/theme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
 export default function TabLayout() {
@@ -19,6 +20,20 @@ export default function TabLayout() {
           title: 'Conversas',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={color} />
+          ),
+          headerRight: () => (
+            <Link href="/settings" asChild>
+              <Pressable style={{ marginRight: spacing.md }}>
+                {({ pressed }) => (
+                  <Ionicons
+                    name="settings-outline"
+                    size={22}
+                    color={colors.textPrimary}
+                    style={{ opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
           ),
         }}
       />
