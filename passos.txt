@@ -1,0 +1,46 @@
+P1 — Passo a passo
+
+1. Escolher um aplicativo para usar como referência.
+- Não é necessário desenvolver o aplicativo do zero.
+- A ideia é reproduzir uma versão do aplicativo utilizando Expo e desenvolvimento híbrido.
+
+2. Analisar o aplicativo escolhido.
+- Navegar pelo aplicativo.
+- Escolher quais telas serão reproduzidas.
+- Identificar botões, menus, textos, imagens e formas de navegação.
+
+3. Preparar o projeto.
+- Criar ou abrir um projeto Expo.
+- Limpar o conteúdo inicial que não será utilizado.
+- Organizar a estrutura antes de começar a desenvolver.
+
+4. Desenvolver no mínimo 6 telas.
+- As telas devem representar partes do aplicativo escolhido.
+- Pode fazer mais de 6 telas caso queira.
+
+5. Implementar a navegação entre as telas.
+- Os botões e elementos de navegação devem permitir acessar as telas correspondentes.
+- O projeto deve funcionar de forma semelhante ao fluxo do aplicativo original.
+
+6. Utilizar Git e GitHub durante o desenvolvimento.
+- Fazer no mínimo 20 commits.
+- Os commits devem mostrar a evolução do trabalho.
+- Evitar fazer apenas um commit com o projeto inteiro pronto.
+- Não há problema em realizar muitos commits.
+
+7. Trabalho em dupla.
+- Os dois integrantes devem participar do desenvolvimento.
+- O projeto pode ficar em um único repositório.
+
+8. Entrega.
+- Enviar no AVA o link do repositório no GitHub.
+- Cada integrante deve enviar o link individualmente para constar na lista de presença.
+- Não é necessário apresentar o trabalho em sala.
+- Não é necessário entregar documentação.
+
+9. Atenção à originalidade.
+- A tolerância de similaridade entre trabalhos é zero.
+- Trabalhos considerados iguais ou copiados podem receber nota igual.
+
+10. Execução do projeto.
+- Mesmo sem apresentação, o projeto deve estar pronto para ser executado e conferido.
