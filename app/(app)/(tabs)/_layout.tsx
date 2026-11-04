@@ -18,7 +18,7 @@ export default function TabLayout() {
         options={{
           title: 'Conversas',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={color} />
+            <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={color as string} />
           ),
         }}
       />
@@ -27,7 +27,7 @@ export default function TabLayout() {
         options={{
           title: 'Status',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'ellipse' : 'ellipse-outline'} size={22} color={color} />
+            <Ionicons name={focused ? 'ellipse' : 'ellipse-outline'} size={22} color={color as string} />
           ),
         }}
       />
@@ -36,7 +36,7 @@ export default function TabLayout() {
         options={{
           title: 'Chamadas',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'call' : 'call-outline'} size={22} color={color} />
+            <Ionicons name={focused ? 'call' : 'call-outline'} size={22} color={color as string} />
           ),
         }}
       />
@@ -45,7 +45,7 @@ export default function TabLayout() {
         options={{
           title: 'Ajustes',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'settings' : 'settings-outline'} size={22} color={color} />
+            <Ionicons name={focused ? 'settings' : 'settings-outline'} size={22} color={color as string} />
           ),
         }}
       />

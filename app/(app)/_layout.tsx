@@ -1,12 +1,19 @@
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 
 import { colors, typography } from '@/constants/theme';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const unstable_settings = {
-  initialRouteName: '(tabs)',
+  anchor: '(tabs)',
 };
 
 export default function AppLayout() {
+  const { isSignedIn } = useAuth();
+
+  if (!isSignedIn) {
+    return <Redirect href="/login" />;
+  }
+
   return (
     <Stack
       screenOptions={{

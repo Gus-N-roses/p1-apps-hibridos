@@ -1,9 +1,11 @@
-import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { colors, spacing, typography } from '@/constants/theme';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginScreen() {
+  const { signIn } = useAuth();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Entrar</Text>
@@ -13,7 +15,7 @@ export default function LoginScreen() {
         placeholderTextColor={colors.textSecondary}
         keyboardType="phone-pad"
       />
-      <Pressable style={styles.button} onPress={() => router.replace('/')}>
+      <Pressable style={styles.button} onPress={signIn}>
         <Text style={styles.buttonText}>Continuar</Text>
       </Pressable>
     </View>
