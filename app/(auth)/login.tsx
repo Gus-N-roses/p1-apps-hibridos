@@ -1,15 +1,16 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { colors, spacing, typography } from '@/constants/theme';
-import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginScreen() {
-  const { signIn } = useAuth();
+  const [phone, setPhone] = useState('');
+  const isValid = phone.replace(/\D/g, '').length >= 10;
 
   function handleLogin() {
-    signIn();
-    router.replace('/');
+    if (!isValid) return;
+    router.push({ pathname: '/otp', params: { phone } });
   }
 
   return (
@@ -20,8 +21,10 @@ export default function LoginScreen() {
         placeholder="Telefone"
         placeholderTextColor={colors.textSecondary}
         keyboardType="phone-pad"
+        value={phone}
+        onChangeText={setPhone}
       />
-      <Pressable style={styles.button} onPress={handleLogin}>
+      <Pressable style={[styles.button, !isValid && styles.buttonDisabled]} onPress={handleLogin}>
         <Text style={styles.buttonText}>Continuar</Text>
       </Pressable>
     </View>
@@ -55,6 +58,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: spacing.sm + spacing.xs,
     alignItems: 'center',
+  },
+  buttonDisabled: {
+    opacity: 0.5,
   },
   buttonText: {
     color: colors.background,

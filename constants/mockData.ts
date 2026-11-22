@@ -1,4 +1,4 @@
-import { Call, Chat, Contact, Status } from '@/types';
+import { Call, Chat, Community, Contact, Status } from '@/types';
 
 const avatarPalette = ['#2E7D6B', '#6B4EA0', '#C77A2E', '#3F6FB5', '#B5495B', '#4E9A7F'];
 
@@ -126,4 +126,25 @@ export const calls: Call[] = [
   { id: 'call4', contactId: 'c6', type: 'audio', direction: 'incoming', timestamp: 'ontem, 18:30' },
   { id: 'call5', contactId: 'c3', type: 'video', direction: 'outgoing', timestamp: 'terça, 20:00' },
   { id: 'call6', contactId: 'c5', type: 'audio', direction: 'missed', timestamp: 'segunda, 09:10' },
+];
+
+export const communities: Community[] = [
+  {
+    id: 'com1',
+    name: 'Faculdade - Turma 2026',
+    color: avatarPalette[3],
+    groups: ['Avisos gerais', 'Apps Híbridos', 'Trabalhos em dupla'],
+  },
+  {
+    id: 'com2',
+    name: 'Condomínio Bela Vista',
+    color: avatarPalette[0],
+    groups: ['Avisos da portaria', 'Assembleia', 'Classificados'],
+  },
+  {
+    id: 'com3',
+    name: 'Pelada de sábado',
+    color: avatarPalette[2],
+    groups: ['Escalação', 'Resenha'],
+  },
 ];

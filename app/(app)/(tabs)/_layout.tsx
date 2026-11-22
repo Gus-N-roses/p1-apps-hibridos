@@ -32,6 +32,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="communities"
+        options={{
+          title: 'Comunidades',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'people' : 'people-outline'} size={22} color={color as string} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="calls"
         options={{
           title: 'Chamadas',

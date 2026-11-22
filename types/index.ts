@@ -50,3 +50,10 @@ export interface MyStatus {
   caption: string;
   createdAt: string;
 }
+
+export interface Community {
+  id: string;
+  name: string;
+  color: string;
+  groups: string[];
+}

@@ -16,17 +16,17 @@ const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string; href?
 
 export default function SettingsScreen() {
   const router = useRouter();
-  const { photoUri } = useProfile();
+  const { name, about, photoUri } = useProfile();
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileRow}>
-        <Avatar name="Você" color={colors.primary} size={56} uri={photoUri} />
+      <Pressable style={styles.profileRow} onPress={() => router.push('/edit-profile')}>
+        <Avatar name={name} color={colors.primary} size={56} uri={photoUri} />
         <View>
-          <Text style={styles.profileName}>Você</Text>
-          <Text style={styles.profileAbout}>Disponível</Text>
+          <Text style={styles.profileName}>{name}</Text>
+          <Text style={styles.profileAbout}>{about}</Text>
         </View>
-      </View>
+      </Pressable>
       <Pressable style={styles.row} onPress={() => router.push('/profile-photo')}>
         <Ionicons name="camera-outline" size={22} color={colors.primary} />
         <Text style={styles.rowLabel}>Alterar foto de perfil</Text>
