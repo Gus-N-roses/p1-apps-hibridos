@@ -43,3 +43,10 @@ export interface Call {
   direction: CallDirection;
   timestamp: string;
 }
+
+export interface MyStatus {
+  id: string;
+  uri: string;
+  caption: string;
+  createdAt: string;
+}
