@@ -3,6 +3,7 @@ import 'react-native-reanimated';
 
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ChatProvider } from '@/contexts/ChatContext';
+import { PrivacyProvider } from '@/contexts/PrivacyContext';
 import { ProfileProvider } from '@/contexts/ProfileContext';
 
 export {
@@ -15,13 +16,15 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <AuthProvider>
         <ProfileProvider>
-          <ChatProvider>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="(app)" />
-              <Stack.Screen name="(auth)" />
-              <Stack.Screen name="+not-found" options={{ headerShown: true }} />
-            </Stack>
-          </ChatProvider>
+          <PrivacyProvider>
+            <ChatProvider>
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="(app)" />
+                <Stack.Screen name="(auth)" />
+                <Stack.Screen name="+not-found" options={{ headerShown: true }} />
+              </Stack>
+            </ChatProvider>
+          </PrivacyProvider>
         </ProfileProvider>
       </AuthProvider>
     </ThemeProvider>

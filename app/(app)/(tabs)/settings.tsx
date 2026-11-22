@@ -6,9 +6,9 @@ import Avatar from '@/components/Avatar';
 import { colors, spacing, typography } from '@/constants/theme';
 import { useProfile } from '@/contexts/ProfileContext';
 
-const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string }[] = [
+const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string; href?: '/privacy' }[] = [
   { icon: 'key-outline', label: 'Conta' },
-  { icon: 'lock-closed-outline', label: 'Privacidade' },
+  { icon: 'lock-closed-outline', label: 'Privacidade', href: '/privacy' },
   { icon: 'chatbox-ellipses-outline', label: 'Conversas' },
   { icon: 'notifications-outline', label: 'Notificações' },
   { icon: 'help-circle-outline', label: 'Ajuda' },
@@ -33,7 +33,10 @@ export default function SettingsScreen() {
       </Pressable>
       <View style={styles.divider} />
       {settingsRows.map((row) => (
-        <Pressable key={row.label} style={styles.row}>
+        <Pressable
+          key={row.label}
+          style={styles.row}
+          onPress={() => row.href && router.push(row.href)}>
           <Ionicons name={row.icon} size={22} color={colors.primary} />
           <Text style={styles.rowLabel}>{row.label}</Text>
         </Pressable>
