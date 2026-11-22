@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
 import { colors, spacing, typography } from '@/constants/theme';
+import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/contexts/ProfileContext';
 
 const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string; href?: '/privacy' }[] = [
@@ -16,6 +17,7 @@ const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string; href?
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const { signOut } = useAuth();
   const { name, about, photoUri } = useProfile();
 
   return (
@@ -41,6 +43,10 @@ export default function SettingsScreen() {
           <Text style={styles.rowLabel}>{row.label}</Text>
         </Pressable>
       ))}
+      <Pressable style={styles.row} onPress={signOut}>
+        <Ionicons name="log-out-outline" size={22} color={colors.missedCall} />
+        <Text style={[styles.rowLabel, { color: colors.missedCall }]}>Sair</Text>
+      </Pressable>
     </View>
   );
 }

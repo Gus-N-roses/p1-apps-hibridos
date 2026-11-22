@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 type AvatarProps = {
@@ -15,10 +16,14 @@ function getInitials(name: string) {
 }
 
 export default function Avatar({ name, color, size = 44, uri }: AvatarProps) {
-  if (uri) {
+  // Se a imagem não carregar (ex.: arquivo salvo que não existe mais), mostra as iniciais.
+  const [failedUri, setFailedUri] = useState<string | null>(null);
+
+  if (uri && uri !== failedUri) {
     return (
       <Image
         source={{ uri }}
+        onError={() => setFailedUri(uri)}
         style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: color }}
       />
     );

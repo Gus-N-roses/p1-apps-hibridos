@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+
+import { lerPreferencias, salvarPreferencias } from '@/storage/preferencias';
 
 type PrivacyContextValue = {
   readReceipts: boolean;
@@ -9,8 +11,22 @@ const PrivacyContext = createContext<PrivacyContextValue | null>(null);
 
 export function PrivacyProvider({ children }: { children: ReactNode }) {
   const [readReceipts, setReadReceipts] = useState(true);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    lerPreferencias({ readReceipts: true }).then((preferencias) => {
+      setReadReceipts(preferencias.readReceipts);
+      setIsReady(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isReady) salvarPreferencias({ readReceipts });
+  }, [isReady, readReceipts]);
 
   const value = useMemo(() => ({ readReceipts, setReadReceipts }), [readReceipts]);
+
+  if (!isReady) return null;
 
   return <PrivacyContext.Provider value={value}>{children}</PrivacyContext.Provider>;
 }

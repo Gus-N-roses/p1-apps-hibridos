@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+
+import { lerPerfil, salvarPerfil } from '@/storage/perfil';
 
 type ProfileContextValue = {
   name: string;
@@ -15,11 +17,28 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState('Você');
   const [about, setAbout] = useState('Disponível');
   const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    lerPerfil({ name: 'Você', about: 'Disponível', photoUri: null }).then((perfil) => {
+      setName(perfil.name);
+      setAbout(perfil.about);
+      setPhotoUri(perfil.photoUri);
+      setIsReady(true);
+    });
+  }, []);
+
+  // Salva o perfil sempre que algum campo mudar (só depois de carregar o salvo).
+  useEffect(() => {
+    if (isReady) salvarPerfil({ name, about, photoUri });
+  }, [isReady, name, about, photoUri]);
 
   const value = useMemo(
     () => ({ name, about, photoUri, setName, setAbout, setPhotoUri }),
     [name, about, photoUri],
   );
+
+  if (!isReady) return null;
 
   return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>;
 }

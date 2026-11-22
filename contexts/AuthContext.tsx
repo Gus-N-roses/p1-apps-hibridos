@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
+import { lerSessao, limparSessao, salvarSessao } from '@/storage/sessao';
 
 type AuthContextValue = {
   isSignedIn: boolean;
@@ -10,15 +12,30 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
-  const value = useMemo(
-    () => ({
-      isSignedIn,
-      signIn: () => setIsSignedIn(true),
-      signOut: () => setIsSignedIn(false),
-    }),
-    [isSignedIn],
-  );
+  // Ao abrir o app, recupera a sessão salva para não pedir login de novo.
+  useEffect(() => {
+    lerSessao().then((logado) => {
+      setIsSignedIn(logado);
+      setIsReady(true);
+    });
+  }, []);
+
+  const signIn = useCallback(() => {
+    setIsSignedIn(true);
+    salvarSessao();
+  }, []);
+
+  const signOut = useCallback(() => {
+    setIsSignedIn(false);
+    limparSessao();
+  }, []);
+
+  const value = useMemo(() => ({ isSignedIn, signIn, signOut }), [isSignedIn, signIn, signOut]);
+
+  // Enquanto lê o storage, não renderiza as rotas (evita piscar a tela de login).
+  if (!isReady) return null;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

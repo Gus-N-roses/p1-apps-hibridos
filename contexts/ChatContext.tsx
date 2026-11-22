@@ -3,12 +3,14 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 
 import { chats as initialChats } from '@/constants/mockData';
+import { lerMensagens, salvarMensagens } from '@/storage/mensagens';
 import { Chat, Message, MessageStatus } from '@/types';
 
 type ChatContextValue = {
@@ -42,8 +44,41 @@ function nowTimestamp() {
 
 export function ChatProvider({ children }: { children: ReactNode }) {
   const [chats, setChats] = useState<Chat[]>(initialChats);
+  const [isReady, setIsReady] = useState(false);
+  const savedRef = useRef<Record<string, Message[]>>({});
   const openChatId = useRef<string | null>(null);
   const counter = useRef(0);
+
+  // Ao abrir o app, junta as mensagens salvas de cada conversa ao mock.
+  // Os "ticks" dependem de timers que se perdem ao fechar o app, então
+  // as mensagens enviadas voltam como lidas.
+  useEffect(() => {
+    Promise.all(initialChats.map((chat) => lerMensagens(chat.id))).then((saved) => {
+      setChats(
+        initialChats.map((chat, i) => {
+          const restored = saved[i].map((m) =>
+            m.senderId === 'me' ? { ...m, status: 'read' as const } : m,
+          );
+          savedRef.current[chat.id] = restored;
+          return restored.length ? { ...chat, messages: [...chat.messages, ...restored] } : chat;
+        }),
+      );
+      setIsReady(true);
+    });
+  }, []);
+
+  // Salva só as mensagens criadas no app (id "local-..."), e só das conversas que mudaram.
+  useEffect(() => {
+    if (!isReady) return;
+    chats.forEach((chat) => {
+      const local = chat.messages.filter((m) => m.id.startsWith('local-'));
+      const previous = savedRef.current[chat.id] ?? [];
+      if (JSON.stringify(local) !== JSON.stringify(previous)) {
+        savedRef.current[chat.id] = local;
+        salvarMensagens(chat.id, local);
+      }
+    });
+  }, [chats, isReady]);
 
   const nextId = () => `local-${Date.now()}-${counter.current++}`;
 
@@ -120,6 +155,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     () => ({ chats, sendMessage, openChat, closeChat }),
     [chats, sendMessage, openChat, closeChat],
   );
+
+  if (!isReady) return null;
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 }
