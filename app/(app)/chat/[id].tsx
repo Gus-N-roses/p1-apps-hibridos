@@ -21,8 +21,8 @@ export default function ChatScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [draft, setDraft] = useState('');
 
-  const contact = contacts.find((c) => c.id === id);
-  const chat = chats.find((c) => c.contactId === id);
+  const chat = chats.find((c) => c.id === id);
+  const contact = contacts.find((c) => c.id === chat?.contactId);
 
   if (!contact || !chat) {
     return (

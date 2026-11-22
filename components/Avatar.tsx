@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 type AvatarProps = {
   name: string;
   color: string;
   size?: number;
+  uri?: string | null;
 };
 
 function getInitials(name: string) {
@@ -13,7 +14,16 @@ function getInitials(name: string) {
   return (first + last).toUpperCase();
 }
 
-export default function Avatar({ name, color, size = 44 }: AvatarProps) {
+export default function Avatar({ name, color, size = 44, uri }: AvatarProps) {
+  if (uri) {
+    return (
+      <Image
+        source={{ uri }}
+        style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: color }}
+      />
+    );
+  }
+
   return (
     <View
       style={[

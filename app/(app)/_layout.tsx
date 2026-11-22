@@ -24,6 +24,7 @@ export default function AppLayout() {
         headerBackTitle: '',
       }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="profile-photo" options={{ title: 'Foto de perfil' }} />
     </Stack>
   );
 }

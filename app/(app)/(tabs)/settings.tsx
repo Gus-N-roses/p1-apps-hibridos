@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
 import { colors, spacing, typography } from '@/constants/theme';
+import { useProfile } from '@/contexts/ProfileContext';
 
 const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string }[] = [
   { icon: 'key-outline', label: 'Conta' },
@@ -13,14 +15,21 @@ const settingsRows: { icon: keyof typeof Ionicons.glyphMap; label: string }[] = 
 ];
 
 export default function SettingsScreen() {
+  const router = useRouter();
+  const { photoUri } = useProfile();
+
   return (
     <View style={styles.container}>
-      <Pressable style={styles.profileRow}>
-        <Avatar name="Você" color={colors.primary} size={56} />
+      <View style={styles.profileRow}>
+        <Avatar name="Você" color={colors.primary} size={56} uri={photoUri} />
         <View>
           <Text style={styles.profileName}>Você</Text>
           <Text style={styles.profileAbout}>Disponível</Text>
         </View>
+      </View>
+      <Pressable style={styles.row} onPress={() => router.push('/profile-photo')}>
+        <Ionicons name="camera-outline" size={22} color={colors.primary} />
+        <Text style={styles.rowLabel}>Alterar foto de perfil</Text>
       </Pressable>
       <View style={styles.divider} />
       {settingsRows.map((row) => (

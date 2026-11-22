@@ -28,7 +28,7 @@ export default function ChatsScreen() {
               timestamp={lastMessage?.timestamp ?? ''}
               unreadCount={item.unreadCount}
               pinned={item.pinned}
-              onPress={() => router.push(`/chat/${contact.id}`)}
+              onPress={() => router.push(`/chat/${item.id}`)}
             />
           );
         }}

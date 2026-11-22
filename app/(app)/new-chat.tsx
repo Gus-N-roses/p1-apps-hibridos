@@ -3,7 +3,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
 import { colors, spacing, typography } from '@/constants/theme';
-import { contacts } from '@/constants/mockData';
+import { chats, contacts } from '@/constants/mockData';
 
 export default function NewChatScreen() {
   return (
@@ -13,15 +13,22 @@ export default function NewChatScreen() {
         data={contacts}
         keyExtractor={(contact) => contact.id}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ item }) => (
-          <Pressable style={styles.row} onPress={() => router.push(`/chat/${item.id}`)}>
-            <Avatar name={item.name} color={item.avatarColor} />
-            <View>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.about}>{item.about}</Text>
-            </View>
-          </Pressable>
-        )}
+        renderItem={({ item }) => {
+          const chat = chats.find((c) => c.contactId === item.id);
+          return (
+            <Pressable
+              style={styles.row}
+              onPress={() => {
+                if (chat) router.push(`/chat/${chat.id}`);
+              }}>
+              <Avatar name={item.name} color={item.avatarColor} />
+              <View>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.about}>{item.about}</Text>
+              </View>
+            </Pressable>
+          );
+        }}
       />
     </View>
   );
