@@ -17,8 +17,9 @@ export default function AppLayout() {
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: colors.background },
-        headerTintColor: colors.textPrimary,
+        headerStyle: { backgroundColor: colors.primaryDark },
+        headerTintColor: '#FFFFFF',
+        statusBarStyle: 'light',
         headerTitleStyle: { fontSize: typography.size.md, fontWeight: typography.weight.medium },
         headerShadowVisible: false,
         headerBackTitle: '',

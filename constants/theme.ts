@@ -1,13 +1,15 @@
 export const colors = {
-  primary: '#2E7D6B',
+  primary: '#128C7E',
+  primaryDark: '#075E54',
+  accent: '#25D366',
   background: '#FFFFFF',
-  chatBackground: '#F7F5F2',
-  bubbleOutgoing: '#DCF3EA',
+  chatBackground: '#ECE5DD',
+  bubbleOutgoing: '#DCF8C6',
   bubbleIncoming: '#FFFFFF',
   textPrimary: '#1A1A1A',
   textSecondary: '#6B7280',
   border: '#E5E5E5',
-  unread: '#2E7D6B',
+  unread: '#25D366',
   missedCall: '#D64545',
 };
 

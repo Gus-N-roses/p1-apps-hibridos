@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -8,11 +7,11 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 
 import Avatar from '@/components/Avatar';
+import BarraDeInput from '@/components/BarraDeInput';
 import ContactsGate from '@/components/ContactsGate';
 import MessageBubble from '@/components/MessageBubble';
 import { colors, spacing, typography } from '@/constants/theme';
@@ -86,20 +85,7 @@ function ChatScreenContent() {
           />
         )}
       />
-      <View style={styles.inputBar}>
-        <TextInput
-          style={styles.input}
-          placeholder="Mensagem"
-          placeholderTextColor={colors.textSecondary}
-          value={draft}
-          onChangeText={setDraft}
-          onSubmitEditing={handleSend}
-          returnKeyType="send"
-        />
-        <Pressable style={styles.sendButton} onPress={handleSend}>
-          <Ionicons name="send" size={18} color="#FFFFFF" />
-        </Pressable>
-      </View>
+      <BarraDeInput value={draft} onChangeText={setDraft} onSend={handleSend} />
     </KeyboardAvoidingView>
   );
 }
@@ -130,39 +116,12 @@ const styles = StyleSheet.create({
   headerName: {
     fontSize: typography.size.md,
     fontWeight: typography.weight.medium,
-    color: colors.textPrimary,
+    color: '#FFFFFF',
   },
   messageList: {
     flex: 1,
   },
   messageListContent: {
     paddingVertical: spacing.sm,
-  },
-  inputBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    backgroundColor: colors.background,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border,
-  },
-  input: {
-    flex: 1,
-    backgroundColor: colors.chatBackground,
-    borderRadius: 20,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    fontSize: typography.size.sm,
-    color: colors.textPrimary,
-  },
-  sendButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
