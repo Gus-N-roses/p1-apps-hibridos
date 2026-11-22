@@ -3,9 +3,11 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
 import { colors, spacing, typography } from '@/constants/theme';
-import { chats, contacts } from '@/constants/mockData';
+import { contacts } from '@/constants/mockData';
+import { useChats } from '@/contexts/ChatContext';
 
 export default function NewChatScreen() {
+  const { chats } = useChats();
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Nova conversa' }} />

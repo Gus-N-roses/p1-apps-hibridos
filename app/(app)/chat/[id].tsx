@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -15,13 +15,35 @@ import {
 import Avatar from '@/components/Avatar';
 import MessageBubble from '@/components/MessageBubble';
 import { colors, spacing, typography } from '@/constants/theme';
-import { chats, contacts } from '@/constants/mockData';
+import { contacts } from '@/constants/mockData';
+import { useChats } from '@/contexts/ChatContext';
 
 export default function ChatScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [draft, setDraft] = useState('');
+  const listRef = useRef<FlatList>(null);
+  const { chats, sendMessage, openChat, closeChat } = useChats();
 
   const chat = chats.find((c) => c.id === id);
+  const unreadCount = chat?.unreadCount ?? 0;
+
+  useEffect(() => {
+    if (!id) return;
+    openChat(id);
+    return () => closeChat(id);
+  }, [id, openChat, closeChat]);
+
+  // Mensagens que chegam com a conversa aberta já contam como lidas.
+  useEffect(() => {
+    if (id && unreadCount > 0) openChat(id);
+  }, [id, unreadCount, openChat]);
+
+  function handleSend() {
+    if (!id || !draft.trim()) return;
+    sendMessage(id, draft);
+    setDraft('');
+  }
+
   const contact = contacts.find((c) => c.id === chat?.contactId);
 
   if (!contact || !chat) {
@@ -47,12 +69,19 @@ export default function ChatScreen() {
         }}
       />
       <FlatList
+        ref={listRef}
+        onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
         style={styles.messageList}
         contentContainerStyle={styles.messageListContent}
         data={chat.messages}
         keyExtractor={(message) => message.id}
         renderItem={({ item }) => (
-          <MessageBubble text={item.text} timestamp={item.timestamp} outgoing={item.senderId === 'me'} />
+          <MessageBubble
+            text={item.text}
+            timestamp={item.timestamp}
+            outgoing={item.senderId === 'me'}
+            status={item.status}
+          />
         )}
       />
       <View style={styles.inputBar}>
@@ -62,8 +91,10 @@ export default function ChatScreen() {
           placeholderTextColor={colors.textSecondary}
           value={draft}
           onChangeText={setDraft}
+          onSubmitEditing={handleSend}
+          returnKeyType="send"
         />
-        <Pressable style={styles.sendButton} onPress={() => setDraft('')}>
+        <Pressable style={styles.sendButton} onPress={handleSend}>
           <Ionicons name="send" size={18} color="#FFFFFF" />
         </Pressable>
       </View>

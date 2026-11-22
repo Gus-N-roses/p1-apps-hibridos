@@ -6,12 +6,16 @@ export interface Contact {
   avatarColor: string;
 }
 
+export type MessageStatus = 'sent' | 'delivered' | 'read';
+
 export interface Message {
   id: string;
   chatId: string;
   senderId: string | 'me';
   text: string;
   timestamp: string;
+  // Só vale para mensagens enviadas por 'me'. Ausente = já lida (mensagens do mock).
+  status?: MessageStatus;
 }
 
 export interface Chat {

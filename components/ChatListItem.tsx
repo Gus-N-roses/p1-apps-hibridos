@@ -2,7 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
+import MessageTicks from '@/components/MessageTicks';
 import { colors, spacing, typography } from '@/constants/theme';
+import { MessageStatus } from '@/types';
 
 type ChatListItemProps = {
   name: string;
@@ -11,6 +13,8 @@ type ChatListItemProps = {
   timestamp: string;
   unreadCount: number;
   pinned?: boolean;
+  lastMessageOutgoing?: boolean;
+  lastMessageStatus?: MessageStatus;
   onPress: () => void;
 };
 
@@ -21,6 +25,8 @@ export default function ChatListItem({
   timestamp,
   unreadCount,
   pinned = false,
+  lastMessageOutgoing = false,
+  lastMessageStatus,
   onPress,
 }: ChatListItemProps) {
   const hasUnread = unreadCount > 0;
@@ -32,9 +38,14 @@ export default function ChatListItem({
         <Text style={styles.name} numberOfLines={1}>
           {name}
         </Text>
-        <Text style={[styles.preview, hasUnread && styles.previewUnread]} numberOfLines={1}>
-          {lastMessage}
-        </Text>
+        <View style={styles.previewRow}>
+          {lastMessageOutgoing && <MessageTicks status={lastMessageStatus} size={16} />}
+          <Text
+            style={[styles.preview, styles.previewText, hasUnread && styles.previewUnread]}
+            numberOfLines={1}>
+            {lastMessage}
+          </Text>
+        </View>
       </View>
       <View style={styles.meta}>
         <View style={styles.metaTop}>
@@ -67,10 +78,18 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontWeight: typography.weight.medium,
   },
+  previewRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 2,
+  },
   preview: {
     fontSize: typography.size.sm,
     color: colors.textSecondary,
-    marginTop: 2,
+  },
+  previewText: {
+    flex: 1,
   },
   previewUnread: {
     color: colors.textPrimary,

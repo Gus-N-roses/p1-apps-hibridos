@@ -4,9 +4,11 @@ import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 import ChatListItem from '@/components/ChatListItem';
 import { colors, spacing } from '@/constants/theme';
-import { chats, contacts } from '@/constants/mockData';
+import { contacts } from '@/constants/mockData';
+import { useChats } from '@/contexts/ChatContext';
 
 export default function ChatsScreen() {
+  const { chats } = useChats();
   const orderedChats = [...chats].sort((a, b) => Number(b.pinned) - Number(a.pinned));
 
   return (
@@ -28,6 +30,8 @@ export default function ChatsScreen() {
               timestamp={lastMessage?.timestamp ?? ''}
               unreadCount={item.unreadCount}
               pinned={item.pinned}
+              lastMessageOutgoing={lastMessage?.senderId === 'me'}
+              lastMessageStatus={lastMessage?.status}
               onPress={() => router.push(`/chat/${item.id}`)}
             />
           );

@@ -1,19 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import MessageTicks from '@/components/MessageTicks';
 import { colors, spacing, typography } from '@/constants/theme';
+import { MessageStatus } from '@/types';
 
 type MessageBubbleProps = {
   text: string;
   timestamp: string;
   outgoing: boolean;
+  status?: MessageStatus;
 };
 
-export default function MessageBubble({ text, timestamp, outgoing }: MessageBubbleProps) {
+export default function MessageBubble({ text, timestamp, outgoing, status }: MessageBubbleProps) {
   return (
     <View style={[styles.row, outgoing ? styles.rowOutgoing : styles.rowIncoming]}>
       <View style={[styles.bubble, outgoing ? styles.bubbleOutgoing : styles.bubbleIncoming]}>
         <Text style={styles.text}>{text}</Text>
-        <Text style={styles.timestamp}>{timestamp}</Text>
+        <View style={styles.footer}>
+          <Text style={styles.timestamp}>{timestamp}</Text>
+          {outgoing && <MessageTicks status={status} />}
+        </View>
       </View>
     </View>
   );
@@ -49,10 +55,15 @@ const styles = StyleSheet.create({
     fontSize: typography.size.sm,
     color: colors.textPrimary,
   },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    gap: 4,
+    marginTop: spacing.xs,
+  },
   timestamp: {
     fontSize: typography.size.xs,
     color: colors.textSecondary,
-    alignSelf: 'flex-end',
-    marginTop: spacing.xs,
   },
 });

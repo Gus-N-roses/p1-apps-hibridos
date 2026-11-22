@@ -2,6 +2,7 @@ import { DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import 'react-native-reanimated';
 
 import { AuthProvider } from '@/contexts/AuthContext';
+import { ChatProvider } from '@/contexts/ChatContext';
 import { ProfileProvider } from '@/contexts/ProfileContext';
 
 export {
@@ -14,11 +15,13 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <AuthProvider>
         <ProfileProvider>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="(app)" />
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="+not-found" options={{ headerShown: true }} />
-          </Stack>
+          <ChatProvider>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(app)" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="+not-found" options={{ headerShown: true }} />
+            </Stack>
+          </ChatProvider>
         </ProfileProvider>
       </AuthProvider>
     </ThemeProvider>
