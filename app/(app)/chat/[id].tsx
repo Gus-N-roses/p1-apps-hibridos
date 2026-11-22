@@ -13,16 +13,18 @@ import {
 } from 'react-native';
 
 import Avatar from '@/components/Avatar';
+import ContactsGate from '@/components/ContactsGate';
 import MessageBubble from '@/components/MessageBubble';
 import { colors, spacing, typography } from '@/constants/theme';
-import { contacts } from '@/constants/mockData';
 import { useChats } from '@/contexts/ChatContext';
+import { useContacts } from '@/contexts/ContactsContext';
 
-export default function ChatScreen() {
+function ChatScreenContent() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [draft, setDraft] = useState('');
   const listRef = useRef<FlatList>(null);
   const { chats, sendMessage, openChat, closeChat } = useChats();
+  const { contacts } = useContacts();
 
   const chat = chats.find((c) => c.id === id);
   const unreadCount = chat?.unreadCount ?? 0;
@@ -62,7 +64,7 @@ export default function ChatScreen() {
         options={{
           headerTitle: () => (
             <Pressable style={styles.headerTitle} onPress={() => router.push(`/contact/${contact.id}`)}>
-              <Avatar name={contact.name} color={contact.avatarColor} size={32} />
+              <Avatar name={contact.name} color={contact.avatarColor} size={32} uri={contact.photoUrl} />
               <Text style={styles.headerName}>{contact.name}</Text>
             </Pressable>
           ),
@@ -99,6 +101,14 @@ export default function ChatScreen() {
         </Pressable>
       </View>
     </KeyboardAvoidingView>
+  );
+}
+
+export default function ChatScreen() {
+  return (
+    <ContactsGate>
+      <ChatScreenContent />
+    </ContactsGate>
   );
 }
 

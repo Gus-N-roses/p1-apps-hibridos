@@ -3,11 +3,13 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
+import ContactsGate from '@/components/ContactsGate';
 import { colors, spacing, typography } from '@/constants/theme';
-import { contacts } from '@/constants/mockData';
+import { useContacts } from '@/contexts/ContactsContext';
 
-export default function ContactInfoScreen() {
+function ContactInfoScreenContent() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { contacts } = useContacts();
   const contact = contacts.find((c) => c.id === id);
 
   if (!contact) {
@@ -22,7 +24,7 @@ export default function ContactInfoScreen() {
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Dados do contato' }} />
       <View style={styles.profile}>
-        <Avatar name={contact.name} color={contact.avatarColor} size={96} />
+        <Avatar name={contact.name} color={contact.avatarColor} size={96} uri={contact.photoUrl} />
         <Text style={styles.name}>{contact.name}</Text>
         <Text style={styles.phone}>{contact.phone}</Text>
       </View>
@@ -40,6 +42,14 @@ export default function ContactInfoScreen() {
         <Text style={styles.infoValue}>Nenhuma mídia compartilhada</Text>
       </View>
     </View>
+  );
+}
+
+export default function ContactInfoScreen() {
+  return (
+    <ContactsGate>
+      <ContactInfoScreenContent />
+    </ContactsGate>
   );
 }
 

@@ -8,6 +8,7 @@ import { CallDirection, CallType } from '@/types';
 type CallListItemProps = {
   name: string;
   avatarColor: string;
+  avatarUri?: string;
   type: CallType;
   direction: CallDirection;
   timestamp: string;
@@ -23,6 +24,7 @@ const directionIcon: Record<CallDirection, keyof typeof Ionicons.glyphMap> = {
 export default function CallListItem({
   name,
   avatarColor,
+  avatarUri,
   type,
   direction,
   timestamp,
@@ -32,7 +34,7 @@ export default function CallListItem({
 
   return (
     <Pressable style={styles.row} onPress={onPress}>
-      <Avatar name={name} color={avatarColor} />
+      <Avatar name={name} color={avatarColor} uri={avatarUri} />
       <View style={styles.textColumn}>
         <Text style={[styles.name, isMissed && styles.nameMissed]} numberOfLines={1}>
           {name}

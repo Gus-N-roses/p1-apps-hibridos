@@ -2,12 +2,14 @@ import { router, Stack } from 'expo-router';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Avatar from '@/components/Avatar';
+import ContactsGate from '@/components/ContactsGate';
 import { colors, spacing, typography } from '@/constants/theme';
-import { contacts } from '@/constants/mockData';
 import { useChats } from '@/contexts/ChatContext';
+import { useContacts } from '@/contexts/ContactsContext';
 
-export default function NewChatScreen() {
+function NewChatScreenContent() {
   const { chats } = useChats();
+  const { contacts } = useContacts();
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Nova conversa' }} />
@@ -23,7 +25,7 @@ export default function NewChatScreen() {
               onPress={() => {
                 if (chat) router.push(`/chat/${chat.id}`);
               }}>
-              <Avatar name={item.name} color={item.avatarColor} />
+              <Avatar name={item.name} color={item.avatarColor} uri={item.photoUrl} />
               <View>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.about}>{item.about}</Text>
@@ -33,6 +35,14 @@ export default function NewChatScreen() {
         }}
       />
     </View>
+  );
+}
+
+export default function NewChatScreen() {
+  return (
+    <ContactsGate>
+      <NewChatScreenContent />
+    </ContactsGate>
   );
 }
 

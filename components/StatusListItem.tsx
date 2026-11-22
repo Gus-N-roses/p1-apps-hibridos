@@ -6,6 +6,7 @@ import { colors, spacing, typography } from '@/constants/theme';
 type StatusListItemProps = {
   name: string;
   avatarColor: string;
+  avatarUri?: string;
   updatedAt: string;
   viewed: boolean;
   onPress: () => void;
@@ -14,6 +15,7 @@ type StatusListItemProps = {
 export default function StatusListItem({
   name,
   avatarColor,
+  avatarUri,
   updatedAt,
   viewed,
   onPress,
@@ -21,7 +23,7 @@ export default function StatusListItem({
   return (
     <Pressable style={styles.row} onPress={onPress}>
       <View style={[styles.ring, { borderColor: viewed ? colors.border : colors.primary }]}>
-        <Avatar name={name} color={avatarColor} size={40} />
+        <Avatar name={name} color={avatarColor} size={40} uri={avatarUri} />
       </View>
       <View style={styles.textColumn}>
         <Text style={styles.name} numberOfLines={1}>

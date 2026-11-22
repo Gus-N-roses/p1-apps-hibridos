@@ -5,12 +5,15 @@ import { Animated, Pressable, SectionList, StyleSheet, Text, View } from 'react-
 
 import Avatar from '@/components/Avatar';
 import StatusListItem from '@/components/StatusListItem';
+import ContactsGate from '@/components/ContactsGate';
 import { colors, spacing, typography } from '@/constants/theme';
-import { contacts, statuses } from '@/constants/mockData';
+import { statuses } from '@/constants/mockData';
+import { useContacts } from '@/contexts/ContactsContext';
 import { useProfile } from '@/contexts/ProfileContext';
 import { useStatus } from '@/contexts/StatusContext';
 
-export default function UpdatesScreen() {
+function UpdatesScreenContent() {
+  const { contacts } = useContacts();
   const router = useRouter();
   const { photoUri } = useProfile();
   const { myStatuses } = useStatus();
@@ -87,6 +90,7 @@ export default function UpdatesScreen() {
             <StatusListItem
               name={contact.name}
               avatarColor={contact.avatarColor}
+              avatarUri={contact.photoUrl}
               updatedAt={item.updatedAt}
               viewed={item.viewed}
               onPress={() => {}}
@@ -95,6 +99,14 @@ export default function UpdatesScreen() {
         }}
       />
     </View>
+  );
+}
+
+export default function UpdatesScreen() {
+  return (
+    <ContactsGate>
+      <UpdatesScreenContent />
+    </ContactsGate>
   );
 }
 

@@ -1,10 +1,13 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import CallListItem from '@/components/CallListItem';
+import ContactsGate from '@/components/ContactsGate';
 import { colors, spacing } from '@/constants/theme';
-import { calls, contacts } from '@/constants/mockData';
+import { calls } from '@/constants/mockData';
+import { useContacts } from '@/contexts/ContactsContext';
 
-export default function CallsScreen() {
+function CallsScreenContent() {
+  const { contacts } = useContacts();
   return (
     <View style={styles.container}>
       <FlatList
@@ -19,6 +22,7 @@ export default function CallsScreen() {
             <CallListItem
               name={contact.name}
               avatarColor={contact.avatarColor}
+              avatarUri={contact.photoUrl}
               type={item.type}
               direction={item.direction}
               timestamp={item.timestamp}
@@ -28,6 +32,14 @@ export default function CallsScreen() {
         }}
       />
     </View>
+  );
+}
+
+export default function CallsScreen() {
+  return (
+    <ContactsGate>
+      <CallsScreenContent />
+    </ContactsGate>
   );
 }
 

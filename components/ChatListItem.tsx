@@ -9,6 +9,7 @@ import { MessageStatus } from '@/types';
 type ChatListItemProps = {
   name: string;
   avatarColor: string;
+  avatarUri?: string;
   lastMessage: string;
   timestamp: string;
   unreadCount: number;
@@ -21,6 +22,7 @@ type ChatListItemProps = {
 export default function ChatListItem({
   name,
   avatarColor,
+  avatarUri,
   lastMessage,
   timestamp,
   unreadCount,
@@ -33,7 +35,7 @@ export default function ChatListItem({
 
   return (
     <Pressable style={styles.row} onPress={onPress}>
-      <Avatar name={name} color={avatarColor} />
+      <Avatar name={name} color={avatarColor} uri={avatarUri} />
       <View style={styles.textColumn}>
         <Text style={styles.name} numberOfLines={1}>
           {name}

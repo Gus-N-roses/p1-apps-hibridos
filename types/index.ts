@@ -4,6 +4,7 @@ export interface Contact {
   about: string;
   phone: string;
   avatarColor: string;
+  photoUrl?: string;
 }
 
 export type MessageStatus = 'sent' | 'delivered' | 'read';

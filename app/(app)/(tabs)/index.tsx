@@ -3,12 +3,14 @@ import { router } from 'expo-router';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 import ChatListItem from '@/components/ChatListItem';
+import ContactsGate from '@/components/ContactsGate';
 import { colors, spacing } from '@/constants/theme';
-import { contacts } from '@/constants/mockData';
 import { useChats } from '@/contexts/ChatContext';
+import { useContacts } from '@/contexts/ContactsContext';
 
-export default function ChatsScreen() {
+function ChatsScreenContent() {
   const { chats } = useChats();
+  const { contacts } = useContacts();
   const orderedChats = [...chats].sort((a, b) => Number(b.pinned) - Number(a.pinned));
 
   return (
@@ -26,6 +28,7 @@ export default function ChatsScreen() {
             <ChatListItem
               name={contact.name}
               avatarColor={contact.avatarColor}
+              avatarUri={contact.photoUrl}
               lastMessage={lastMessage?.text ?? ''}
               timestamp={lastMessage?.timestamp ?? ''}
               unreadCount={item.unreadCount}
@@ -41,6 +44,14 @@ export default function ChatsScreen() {
         <Ionicons name="chatbubble-ellipses" size={24} color="#FFFFFF" />
       </Pressable>
     </View>
+  );
+}
+
+export default function ChatsScreen() {
+  return (
+    <ContactsGate>
+      <ChatsScreenContent />
+    </ContactsGate>
   );
 }
 
